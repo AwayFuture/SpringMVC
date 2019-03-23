@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1">
+	
+	<!-- 配置DispatcherServlet -->
+	<servlet>
+		<servlet-name>springDispatcherServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!-- 配置初始化参数：配置SpringMVC 配置文件的位置和名称 -->
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:springmvc.xml</param-value>
+		</init-param>
+		
+		<!-- 也可以不配置上面的<init-param>来指定配置文件的位置和名称，通过默认的配置文件/WEB-INF/<servlet-name>-servlet.xml即可
+			 如在 /WEB-INF/springDispatcherServlet-servlet.xml中即可不用配置<init-param>的内容-->
+		
+		<!-- 配置该servlet的加载时间：程序启动时加载/Servlet被请求时再加载 ,数值越小，优先级越高(数值>=0)-->
+		<!-- 参考：https://www.cnblogs.com/lemon-now/p/5542301.html -->
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>springDispatcherServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
+	
+	<!-- 配置 org.springframework.web.filter.HiddenHttpMethodFilter ：可以将POST请求转化为PUT/DELETE请求-->
+	<filter>
+		<filter-name>HiddenHttpMethodFilter</filter-name>
+		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>HiddenHttpMethodFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+</web-app>
